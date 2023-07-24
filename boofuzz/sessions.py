@@ -590,6 +590,8 @@ class Session(pgraph.Graph):
                 self._fuzz_data_logger.log_error(str(e))
                 raise
 
+        self._fuzz_data_logger.log_info("Fork Version Initialized")
+
     @property
     def netmon_results(self):
         raise NotImplementedError(
