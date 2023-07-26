@@ -36,6 +36,8 @@ from boofuzz.protocol_session import ProtocolSession
 from boofuzz.web.app import app
 from .exception import BoofuzzFailure
 
+"""ModuleNotFoundError: No module named 'boofuzz.expection'"""
+# from .expection import PKTAnalysor
 
 class Target:
     """Target descriptor container.
@@ -572,6 +574,9 @@ class Session(pgraph.Graph):
         self.root.name = self.root.label
         self.last_recv = None
         self.last_send = None
+
+        # store generated fuzzed data
+        self.fuzzed_data = None
 
         self.add_node(self.root)
 
@@ -1183,6 +1188,17 @@ class Session(pgraph.Graph):
             data = callback_data
         else:
             data = self.fuzz_node.render(mutation_context)
+
+        # store the generated fuzzed data
+        self.fuzzed_data = data
+        self._fuzz_data_logger.log_info("fuzzed data from transmit_fuzz(): {}".format(self.fuzzed_data))
+
+        """ how to process the data before sending it? """
+        """ to seperate the data generation from sending into 2 functions ? """
+        """ process.join() ? """
+        """ a hook? """
+        """ how to prevent mutual import? """
+        """ how to pass a pointer as a parameter to operate on real session value"""
 
         try:  # send
             self.targets[0].send(data)
