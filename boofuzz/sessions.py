@@ -1174,6 +1174,12 @@ class Session(pgraph.Graph):
             else:
                 raise BoofuzzFailure(str(e))
 
+
+    def pkt_analysor(self):
+        self._fuzz_data_logger.log_info("fuzzed data from pkt_analysor(): {}".format(self.fuzzed_data))
+
+        pass 
+
     def transmit_fuzz(self, sock, node, edge, callback_data, mutation_context):
         """Render and transmit a fuzzed node, process callbacks accordingly.
 
@@ -1199,6 +1205,10 @@ class Session(pgraph.Graph):
         """ a hook? """
         """ how to prevent mutual import? """
         """ how to pass a pointer as a parameter to operate on real session value"""
+
+        #  name 'pkt_analysor' is not defined
+        """need to add self. prefix to fix"""
+        self.pkt_analysor()
 
         try:  # send
             self.targets[0].send(data)
